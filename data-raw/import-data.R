@@ -1,4 +1,3 @@
-
 # Load Packages -----------------------------------------------------------
 
 library(tidyverse)
@@ -34,8 +33,7 @@ total_measles_cases <- measles_cases %>%
   summarise(total_cases = sum(cases_total))
 
 # Export data
-write_csv(total_measles_cases, "data/total_measles_cases.csv")
-
+write_csv(total_measles_cases, "data-clean/total_measles_cases.csv")
 
 
 # MMR Coverage ------------------------------------------------------------
@@ -93,7 +91,6 @@ write_csv(non_medical_exemptions, "Non-medical exemption rates.csv")
 
 # DTaP --------------------------------------------------------------------
 
-
 dtap_coverage <- read_csv(
   "~/Library/CloudStorage/OneDrive-SharedLibraries-JohnsHopkins/Rose Weeks - Monitoring State Immunization Policies/Indicators/Raw data files/Vaccination_Coverage_among_Young_Children__0-35_Months__20250528.csv"
 )
@@ -134,7 +131,6 @@ health_spending <- read_csv(
   "~/Library/CloudStorage/OneDrive-SharedLibraries-JohnsHopkins/Rose Weeks - Monitoring State Immunization Policies/Indicators/Raw data files/Public Health Spending_America's Health Rankings.csv"
 )
 View(health_spending)
-
 
 # Anti-Vaccination Groups -------------------------------------------------
 
