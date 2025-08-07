@@ -41,11 +41,8 @@ write_csv(total_measles_cases, "data-clean/total_measles_cases.csv")
 # MMR Coverage ------------------------------------------------------------
 # CSV comes from CDC's SchoolVaxView (https://data.cdc.gov/Vaccinations/Vaccination-Coverage-and-Exemptions-among-Kinderga/ijqb-a7ye/about_data)
 # Import- MMR coverage data
-mmr_coverage <- read_csv("data-raw/mmr_coverage.csv")
-  names(mmr_coverage)
-
-# Clean column names
-mmr_coverage <- janitor::clean_names(mmr_coverage)
+mmr_coverage <- read_csv("data-raw/mmr_coverage.csv") |>
+  clean_names()
 
 # Desired years
 target_years <- c(
@@ -68,30 +65,29 @@ head(mmr_filtered)
 # Sort the dataset by descending years
 mmr_filtered_sorted <- mmr_filtered %>%
   arrange(geography, school_year)
-#Export the dataset
+
+# Export the dataset
 write_csv(mmr_filtered_sorted, "data-clean/mmr_coverage_final.csv")
 
 # Non-medical exemption rate-----------------------------------------------------------------
 # Data comes from CDC's SchoolVaxView (same dataset as above)
 # Filter for non-medical exemptions for 2023-2024 and 2024-2025
-unique(mmr_coverage$dose)
+
 non_medical_exemptions <- mmr_coverage %>%
   filter(
     dose == "Non-Medical Exemption",
     school_year %in% c("2023-24", "2024-25"),
     (geography_type == "States" | geography == "United States")
-  ) %>%
-#Export the dataset
+  )
+# Export the dataset
 write_csv(non_medical_exemptions, "data-clean/non_medical_exemption.csv")
 
 # DTaP --------------------------------------------------------------------
 # CSV comes from CDC's ChildVaxView (https://www.cdc.gov/childvaxview/about/interactive-reports.html)
 # Import data set
-dtap_coverage <- read_csv("data-raw/dtap_coverage.csv")
-View(dtap_coverage)
-#Clean column names
-dtap_coverage <- janitor::clean_names(dtap_coverage)
-names(dtap_coverage)
+dtap_coverage <- read_csv("data-raw/dtap_coverage.csv") |>
+  clean_names()
+
 # Filter
 dtap_filtered_states <- dtap_coverage %>%
   filter(
@@ -101,8 +97,8 @@ dtap_filtered_states <- dtap_coverage %>%
     birth_year_birth_cohort %in% c("2017", "2018", "2019", "2020", "2021")
   ) %>%
   arrange(geography, birth_year_birth_cohort)
-print(dtap_filtered_states)
-#Export dataset
+
+# Export dataset
 write_csv(dtap_filtered_states, "data-clean/dtap_coverage_final.csv")
 
 
@@ -111,8 +107,11 @@ write_csv(dtap_filtered_states, "data-clean/dtap_coverage_final.csv")
 
 vaccine_exemptions <- read_csv("data-raw/non_medical_exemption_policies.csv")
 
-#Export dataset
-write_csv(vaccine_exemptions, "data-clean/non_medical_exemption_policies_final.csv")
+# Export dataset
+write_csv(
+  vaccine_exemptions,
+  "data-clean/non_medical_exemption_policies_final.csv"
+)
 
 # Health Spending ---------------------------------------------------------
 # CSV from from 'America's health rankings'
@@ -128,7 +127,6 @@ write_csv(health_spending, "data-clean/health_spending_final.csv")
 universal_purchase <- read_csv("data-raw/universal_purchase.csv")
 
 # Export dataset
-write_csv (universal_purchase, "data-clean/universal_purchase_final.csv")
+write_csv(universal_purchase, "data-clean/universal_purchase_final.csv")
 
 # State policies------------------------------------------------------
-
