@@ -24,7 +24,6 @@ if ("cases_total" %in% names(measles_cases) == FALSE) {
   stop("'cases_total' column missing.")
 }
 
-
 # Total number of unique states
 measles_cases %>%
   summarise(num_unique_states = n_distinct(state))
@@ -32,7 +31,7 @@ measles_cases %>%
 # Summarise by state
 total_measles_cases <- measles_cases %>%
   group_by(state) %>%
-  summarise(total_cases = sum(cases_total))
+  summarise(total_cases = sum(cases_total, na.rm = TRUE))
 
 # Export data
 write_csv(total_measles_cases, "data-clean/total_measles_cases.csv")
