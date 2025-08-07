@@ -2,11 +2,13 @@
 
 library(tidyverse)
 library(janitor)
+library(readr)
+library(stringr)
 
 
 # Measles -----------------------------------------------------------------
 
-# CSV comes from cdc.gov/measles
+# CSV comes from https://publichealth.jhu.edu/ivac/resources/us-measles-tracker
 
 # Import- measles cases dataset
 measles_cases <- read_csv("data-raw/measles_cases.csv") |>
@@ -37,23 +39,21 @@ write_csv(total_measles_cases, "data-clean/total_measles_cases.csv")
 
 
 # MMR Coverage ------------------------------------------------------------
-
-#Import- MMR coverage data
-mmr_coverage <- read_csv(
-  "~/Library/CloudStorage/OneDrive-SharedLibraries-JohnsHopkins/Rose Weeks - Monitoring State Immunization Policies/Indicators/Raw data files/Vaccination_Coverage_and_Exemptions_among_Kindergartners_20250528.csv"
-)
-names(mmr_coverage)
+# CSV comes from CDC's SchoolVaxView (https://data.cdc.gov/Vaccinations/Vaccination-Coverage-and-Exemptions-among-Kinderga/ijqb-a7ye/about_data)
+# Import- MMR coverage data
+mmr_coverage <- read_csv("data-raw/mmr_coverage.csv")
+  names(mmr_coverage)
 
 # Clean column names
 mmr_coverage <- janitor::clean_names(mmr_coverage)
 
 # Desired years
 target_years <- c(
-  "2019-20",
   "2020-21",
   "2021-22",
   "2022-23",
-  "2023-24"
+  "2023-24",
+  "2024-25"
 )
 # Filter the data
 mmr_filtered <- mmr_coverage %>%
@@ -69,31 +69,25 @@ head(mmr_filtered)
 mmr_filtered_sorted <- mmr_filtered %>%
   arrange(geography, school_year)
 #Export the dataset
-library(readr)
-write_csv(mmr_filtered_sorted, "MMR coverage.csv")
+write_csv(mmr_filtered_sorted, "data-clean/mmr_coverage_final.csv")
 
-#Extract the non medical exemption rate from this data set
-library(dplyr)
-install.packages("stringr")
-library(stringr)
-
-# Filter for non-medical exemptions for 2022-2023 and 2023-2024
+# Non-medical exemption rate-----------------------------------------------------------------
+# Data comes from CDC's SchoolVaxView (same dataset as above)
+# Filter for non-medical exemptions for 2023-2024 and 2024-2025
 unique(mmr_coverage$dose)
 non_medical_exemptions <- mmr_coverage %>%
   filter(
     dose == "Non-Medical Exemption",
-    school_year %in% c("2022-23", "2023-24"),
+    school_year %in% c("2023-24", "2024-25"),
     (geography_type == "States" | geography == "United States")
   ) %>%
-  arrange(school_year, geography)
 #Export the dataset
-write_csv(non_medical_exemptions, "Non-medical exemption rates.csv")
+write_csv(non_medical_exemptions, "data-clean/non_medical_exemption.csv")
 
 # DTaP --------------------------------------------------------------------
-
-dtap_coverage <- read_csv(
-  "~/Library/CloudStorage/OneDrive-SharedLibraries-JohnsHopkins/Rose Weeks - Monitoring State Immunization Policies/Indicators/Raw data files/Vaccination_Coverage_among_Young_Children__0-35_Months__20250528.csv"
-)
+# CSV comes from CDC's ChildVaxView (https://www.cdc.gov/childvaxview/about/interactive-reports.html)
+# Import data set
+dtap_coverage <- read_csv("data-raw/dtap_coverage.csv")
 View(dtap_coverage)
 #Clean column names
 dtap_coverage <- janitor::clean_names(dtap_coverage)
@@ -109,30 +103,32 @@ dtap_filtered_states <- dtap_coverage %>%
   arrange(geography, birth_year_birth_cohort)
 print(dtap_filtered_states)
 #Export dataset
-write_csv(dtap_filtered_states, "DTaP coverage rates.csv")
+write_csv(dtap_filtered_states, "data-clean/dtap_coverage_final.csv")
 
 
 # Vaccine Exemptions ------------------------------------------------------
+# CSV from NCSL's brief (https://www.ncsl.org/health/state-non-medical-exemptions-from-school-immunization-requirements)
 
-vaccine_exemptions <- read_csv(
-  "~/Library/CloudStorage/OneDrive-SharedLibraries-JohnsHopkins/Rose Weeks - Monitoring State Immunization Policies/Indicators/Raw data files/State_vaccine_exemptions_0528.csv"
-)
-View(vaccine_exemptions)
-names(vaccine_exemptions)
+vaccine_exemptions <- read_csv("data-raw/non_medical_exemption_policies.csv")
 
+#Export dataset
+write_csv(vaccine_exemptions, "data-clean/non_medical_exemption_policies_final.csv")
 
 # Health Spending ---------------------------------------------------------
+# CSV from from 'America's health rankings'
 
-#Import dataset-Public Health Spending
-install.packages("readr")
-library(readr)
-library(readr)
-health_spending <- read_csv(
-  "~/Library/CloudStorage/OneDrive-SharedLibraries-JohnsHopkins/Rose Weeks - Monitoring State Immunization Policies/Indicators/Raw data files/Public Health Spending_America's Health Rankings.csv"
-)
-View(health_spending)
+# Import dataset-Public Health Spending
+health_spending <- read_csv("data-raw/health_spending.csv")
 
-# Anti-Vaccination Groups -------------------------------------------------
+# Export dataset
+write_csv(health_spending, "data-clean/health_spending_final.csv")
 
-# Data comes from Lexis-Nexis
-# We did XXXX
+# Universal vaccine purchase program------------------------------------------------------
+# CSV from AIM resources page
+universal_purchase <- read_csv("data-raw/universal_purchase.csv")
+
+# Export dataset
+write_csv (universal_purchase, "data-clean/universal_purchase_final.csv")
+
+# State policies------------------------------------------------------
+
