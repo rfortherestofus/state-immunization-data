@@ -17,6 +17,7 @@ We use the `data-raw/import-data.R` file to import and clean all of the above
 files. The `data-raw/import-data.R` file then saves a set of clean CSV files into the `data-clean` folder. 
 
 The `data-clean` folder holds all clean data:
+
 - `total_measles_cases.csv` has measles cases for each state
 - `mmr_coverage_final.csv` has data for at least one dose of MMR vaccine coverage for kindergartners for the 2021-2025 school years.
 - `dtap_coverage_final.csv` has data for at least 4 doses of DTaP vaccine at 24 months for children born between 2017 and 2021. 
