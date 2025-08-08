@@ -17,12 +17,13 @@ We use the `data-raw/import-data.R` file to import and clean all of the above
 files. The `data-raw/import-data.R` file then saves a set of clean CSV files into the `data-clean` folder. 
 
 The `data-clean` folder holds all clean data:
--`total_measles_cases.csv` has measles cases for each state
--`mmr_coverage_final.csv` has data for at least one dose of MMR vaccine coverage for kindergartners for 2021-2025 school years. -`dtap_coverage_final.csv` has data for at least 4 doses of DTaP vaccine at 24 months for children born between 2017-2021. 
--`non_medical_exemption.csv` has data on non-medical exemption rates for all states 
--`non_medical_exemption_policies.csv` presents state level policies on religious and personal exemptions. 
--`health_spending_final.csv` has data on public health spending per capita for 2022-2023. 
--`universal_purchase_final.csv` presents data on a state's participation in the 'Universal Vaccine Purchase Program'
--`state_policies_final.csv` has data on state level immunization related policies that could strengthen or weaken vaccine safety nets. 
+- `total_measles_cases.csv` has measles cases for each state
+- `mmr_coverage_final.csv` has data for at least one dose of MMR vaccine coverage for kindergartners for the 2021-2025 school years.
+- `dtap_coverage_final.csv` has data for at least 4 doses of DTaP vaccine at 24 months for children born between 2017 and 2021. 
+- `non_medical_exemption.csv` has data on non-medical exemption rates for all states 
+- `non_medical_exemption_policies.csv` presents state-level policies on religious and personal exemptions. 
+- `health_spending_final.csv` has data on public health spending per capita for 2022-2023. 
+- `universal_purchase_final.csv` presents data on a state's participation in the 'Universal Vaccine Purchase Program'
+- `state_policies_final.csv` has data on state-level immunization-related policies that could strengthen or weaken vaccine safety nets. 
 
 The CSV files in the `data-clean` folder are used to generate state-level immunization reports for all 50 states, the District of Columbia, and Puerto Rico.
